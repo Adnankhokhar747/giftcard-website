@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GiftCardHub - Premium Digital Gift Cards</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6f42c1;
+            --secondary: #e83e8c;
+            --success: #20c997;
+            --dark: #343a40;
+            --light: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary) !important;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, #6f42c1, #e83e8c);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 30px;
+            cursor: pointer;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .card-img-top {
+            height: 180px;
+            object-fit: contain;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+        }
+        
+        .card-body {
+            text-align: center;
+        }
+        
+        .card-title {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .price-tag {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, #6f42c1, #e83e8c);
+            color: white;
+            border-radius: 15px 15px 0 0;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .btn-primary:hover {
+            background-color: #5a32a3;
+            border-color: #5a32a3;
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+            border-color: var(--secondary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #d91a72;
+            border-color: #d91a72;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 15px;
+            transition: color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: var(--secondary);
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+        
+        .gift-card-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .feature-box {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            height: 100%;
+        }
+        
+        .feature-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .payment-methods img {
+            height: 40px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-gift me-2"></i>GiftCardHub
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#gift-cards">Gift Cards</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#how-it-works">How It Works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#testimonials">Testimonials</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+                <button class="btn btn-primary ms-lg-3">Sign In</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-4">Premium Digital Gift Cards</h1>
+                    <p class="lead mb-4">Get instant delivery of digital gift cards for all your favorite brands. Perfect for gifts, rewards, or personal use.</p>
+                    <a href="#gift-cards" class="btn btn-light btn-lg">Shop Now</a>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <i class="fas fa-gift fa-10x text-white-50"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gift Cards Section -->
+    <section id="gift-cards" class="py-5">
+        <div class="container">
+            <h2 class="section-title">Popular Gift Cards</h2>
+            <div class="row">
+                <!-- Facebook Ads Card -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100" data-bs-toggle="modal" data-bs-target="#facebookModal">
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center">
+                            <i class="fab fa-facebook fa-5x text-primary"></i>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Facebook Ads</h5>
+                            <p class="card-text">Promote your business with Facebook advertising credits.</p>
+                            <div class="price-tag">From $25</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- TikTok Ads Card -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100" data-bs-toggle="modal" data-bs-target="#tiktokModal">
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center">
+                            <i class="fab fa-tiktok fa-5x text-dark"></i>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">TikTok Ads</h5>
+                            <p class="card-text">Reach new audiences with TikTok advertising credits.</p>
+                            <div class="price-tag">From $30</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Amazon Card -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100" data-bs-toggle="modal" data-bs-target="#amazonModal">
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center">
+                            <i class="fab fa-amazon fa-5x text-warning"></i>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Amazon</h5>
+                            <p class="card-text">Shop millions of products with Amazon gift cards.</p>
+                            <div class="price-tag">From $10</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Razer Card -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100" data-bs-toggle="modal" data-bs-target="#razerModal">
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center">
+                            <i class="fas fa-gamepad fa-5x text-success"></i>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Razer Gold</h5>
+                            <p class="card-text">Purchase games, in-game content, and more.</p>
+                            <div class="price-tag">From $20</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Xbox Card -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100" data-bs-toggle="modal" data-bs-target="#xboxModal">
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center">
+                            <i class="fab fa-xbox fa-5x text-success"></i>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Xbox</h5>
+                            <p class="card-text">Buy games, add-ons, and subscriptions for Xbox.</p>
+                            <div class="price-tag">From $15</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Apple Card -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100" data-bs-toggle="modal" data-bs-target="#appleModal">
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center">
+                            <i class="fab fa-apple fa-5x text-dark"></i>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Apple</h5>
+                            <p class="card-text">Purchase apps, music, movies, and more from Apple.</p>
+                            <div class="price-tag">From $25</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h4>1. Choose Your Card</h4>
+                        <p>Browse our selection of premium gift cards and select the one you want.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <h4>2. Make Payment</h4>
+                        <p>Complete your purchase securely using our trusted payment methods.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-box">
+                        <div class="feature-icon">
+                            <i class="fas fa-envelope-open-text"></i>
+                        </div>
+                        <h4>3. Receive Instantly</h4>
+                        <p>Get your digital gift card delivered to your email immediately after payment.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-5">
+        <div class="container">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            "I needed Facebook Ads credits quickly for a campaign, and GiftCardHub delivered instantly. Highly recommended!"
+                        </div>
+                        <div class="testimonial-author">- Sarah Johnson</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            "The process was so smooth. I got my Amazon gift card within minutes of payment. Will definitely use again!"
+                        </div>
+                        <div class="testimonial-author">- Michael Chen</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            "Great service for TikTok ads! The customer support was helpful when I had questions about redemption."
+                        </div>
+                        <div class="testimonial-author">- Emily Rodriguez</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <div class="card">
+                        <div class="card-body p-4">
+                            <form>
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Your Name</label>
+                                    <input type="text" class="form-control" id="name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="message" class="form-label">Message</label>
+                                    <textarea class="form-control" id="message" rows="5" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Send Message</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5><i class="fas fa-gift me-2"></i>GiftCardHub</h5>
+                    <p>Your trusted source for premium digital gift cards. Fast delivery and excellent customer service.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white text-decoration-none">Home</a></li>
+                        <li><a href="#gift-cards" class="text-white text-decoration-none">Gift Cards</a></li>
+                        <li><a href="#how-it-works" class="text-white text-decoration-none">How It Works</a></li>
+                        <li><a href="#testimonials" class="text-white text-decoration-none">Testimonials</a></li>
+                        <li><a href="#contact" class="text-white text-decoration-none">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Payment Methods</h5>
+                    <div class="payment-methods">
+                        <img src="https://cdn-icons-png.flaticon.com/512/196/196578.png" alt="Visa">
+                        <img src="https://cdn-icons-png.flaticon.com/512/196/196561.png" alt="Mastercard">
+                        <img src="https://cdn-icons-png.flaticon.com/512/196/196565.png" alt="PayPal">
+                        <img src="https://cdn-icons-png.flaticon.com/512/196/196558.png" alt="Apple Pay">
+                    </div>
+                    <p class="mt-3">We accept all major credit cards and digital payment methods.</p>
+                </div>
+            </div>
+            <hr class="bg-white">
+            <div class="text-center pt-3">
+                <p>&copy; 2023 GiftCardHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Facebook Modal -->
+    <div class="modal fade" id="facebookModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Facebook Ads Gift Card</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="text-center mb-4">
+                                <i class="fab fa-facebook fa-7x text-primary"></i>
+                            </div>
+                            <h4>Facebook Ads Credits</h4>
+                            <p>Promote your business, reach new customers, and grow your audience with Facebook advertising credits.</p>
+                            <ul>
+                                <li>Instant delivery via email</li>
+                                <li>Works with all Facebook ad types</li>
+                                <li>No expiration date</li>
+                                <li>Perfect for businesses of all sizes</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Select Amount</h5>
+                                    <div class="d-grid gap-2">
+                                        <button class="btn btn-outline-primary">$25</button>
+                                        <button class="btn btn-outline-primary">$50</button>
+                                        <button class="btn btn-outline-primary">$100</button>
+                                        <button class="btn btn-outline-primary">$250</button>
+                                        <button class="btn btn-outline-primary">$500</button>
+                                    </div>
+                                    <div class="mt-3">
+                                        <label for="customAmount" class="form-label">Or enter custom amount</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">$</span>
+                                            <input type="number" class="form-control" id="customAmount" min="10" max="1000">
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <button class="btn btn-primary w-100">Add to Cart</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TikTok Modal -->
+    <div class="modal fade" id="tiktokModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">TikTok Ads Gift Card</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="text-center mb-4">
+                                <i class="fab fa-tiktok fa-7x text-dark"></i>
+                            </div>
+                            <h4>TikTok Ads Credits</h4>
+                            <p>Create engaging video ads and reach TikTok's massive global audience with advertising credits.</p>
+                            <ul>
+                                <li>Instant digital delivery</li>
+                                <li>Target specific demographics</li>
+                                <li>Track performance in real-time</li>
+                                <li>Perfect for brand awareness campaigns</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Select Amount</h5>
+                                    <div class="d-grid gap-2">
+                                        <button class="btn btn-outline-dark">$30</button>
+                                        <button class="btn btn-outline-dark">$60</button>
+                                        <button class="btn btn-outline-dark">$120</button>
+                                        <button class="btn btn-outline-dark">$300</button>
+                                        <button class="btn btn-outline-dark">$600</button>
+                                    </div>
+                                    <div class="mt-3">
+                                        <label for="customAmountTikTok" class="form-label">Or enter custom amount</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">$</span>
+                                            <input type="number" class="form-control" id="customAmountTikTok" min="20" max="1000">
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <button class="btn btn-primary w-100">Add to Cart</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Amazon Modal -->
+    <div class="modal fade" id="amazonModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Amazon Gift Card</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="text-center mb-4">
+                                <i class="fab fa-amazon fa-7x text-warning"></i>
+                            </div>
+                            <h4>Amazon Gift Card</h4>
+                            <p>Shop millions of products, stream movies and music, and enjoy Amazon's vast ecosystem with an Amazon gift card.</p>
+                            <ul>
+                                <li>Instant email delivery</li>
+                                <li>No shipping fees</li>
+                                <li>Redeemable for millions of items</li>
+                                <li>Never expires</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Select Amount</h5>
+                                    <div class="d-grid gap-2">
+                                        <button class="btn btn-outline-warning">$10</button>
+                                        <button class="btn btn-outline-warning">$25</button>
+                                        <button class="btn btn-outline-warning">$50</button>
+                                        <button class="btn btn-outline-warning">$100</button>
+                                        <button class="btn btn-outline-warning">$200</button>
+                                    </div>
+                                    <div class="mt-3">
+                                        <label for="customAmountAmazon" class="form-label">Or enter custom amount</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">$</span>
+                                            <input type="number" class="form-control" id="customAmountAmazon" min="5" max="2000">
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <button class="btn btn-primary w-100">Add to Cart</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Razer Modal -->
+    <div class="modal fade" id="razerModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Razer Gold Gift Card</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="text-center mb-4">
+                                <i class="fas fa-gamepad fa-7x text-success"></i>
+                            </div>
+                            <h4>Razer Gold Credits</h4>
+                            <p>Purchase games, in-game content, apps, and more with Razer Gold, the universal gaming currency.</p>
+                            <ul>
+                                <li>Works with thousands of games</li>
+                                <li>Buy in-game items and currency</li>
+                                <li>Exclusive deals and bonuses</li>
+                                <li>Instant digital delivery</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Select Amount</h5>
+                                    <div class="d-grid gap-2">
+                                        <button class="btn btn-outline-success">$20</button>
+                                        <button class="btn btn-outline-success">$50</button>
+                                        <button class="btn btn-outline-success">$100</button>
+                                        <button class="btn btn-outline-success">$200</button>
+                                        <button class="btn btn-outline-success">$500</button>
+                                    </div>
+                                    <div class="mt-3">
+                                        <label for="customAmountRazer" class="form-label">Or enter custom amount</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">$</span>
+                                            <input type="number" class="form-control" id="customAmountRazer" min="10" max="1000">
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <button class="btn btn-primary w-100">Add to Cart</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Xbox Modal -->
+    <div class="modal fade" id="xboxModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xbox Gift Card</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="text-center mb-4">
+                                <i class="fab fa-xbox fa-7x text-success"></i>
+                            </div>
+                            <h4>Xbox Digital Gift Card</h4>
+                            <p>Buy games, add-ons, movies, TV shows, and subscriptions for your Xbox console or Windows PC.</p>
+                            <ul>
+                                <li>Redeem on Xbox and Windows</li>
+                                <li>Purchase games and DLC</li>
+                                <li>Subscribe to Xbox Game Pass</li>
+                                <li>No expiration date</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Select Amount</h5>
+                                    <div class="d-grid gap-2">
+                                        <button class="btn btn-outline-success">$15</button>
+                                        <button class="btn btn-outline-success">$25</button>
+                                        <button class="btn btn-outline-success">$50</button>
+                                        <button class="btn btn-outline-success">$100</button>
+                                        <button class="btn btn-outline-success">$150</button>
+                                    </div>
+                                    <div class="mt-3">
+                                        <label for="customAmountXbox" class="form-label">Or enter custom amount</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">$</span>
+                                            <input type="number" class="form-control" id="customAmountXbox" min="10" max="200">
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <button class="btn btn-primary w-100">Add to Cart</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Apple Modal -->
+    <div class="modal fade" id="appleModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Apple Gift Card</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="text-center mb-4">
+                                <i class="fab fa-apple fa-7x text-dark"></i>
+                            </div>
+                            <h4>Apple Gift Card</h4>
+                            <p>Shop the Apple Store, App Store, Apple Music, Apple TV+, iCloud, and more with an Apple Gift Card.</p>
+                            <ul>
+                                <li>Flexible across Apple ecosystem</li>
+                                <li>Buy apps, music, and subscriptions</li>
+                                <li>Purchase Apple hardware and accessories</li>
+                                <li>No expiration date</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Select Amount</h5>
+                                    <div class="d-grid gap-2">
+                                        <button class="btn btn-outline-dark">$25</button>
+                                        <button class="btn btn-outline-dark">$50</button>
+                                        <button class="btn btn-outline-dark">$100</button>
+                                        <button class="btn btn-outline-dark">$200</button>
+                                        <button class="btn btn-outline-dark">$500</button>
+                                    </div>
+                                    <div class="mt-3">
+                                        <label for="customAmountApple" class="form-label">Or enter custom amount</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">$</span>
+                                            <input type="number" class="form-control" id="customAmountApple" min="10" max="1000">
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <button class="btn btn-primary w-100">Add to Cart</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Simple JavaScript to enhance user experience
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add animation to cards on scroll
+            const cards = document.querySelectorAll('.card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            cards.forEach(card => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s, transform 0.5s';
+                observer.observe(card);
+            });
+            
+            // Add active class to nav links on scroll
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+            
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (scrollY >= (sectionTop - 100)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
